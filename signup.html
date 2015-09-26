@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Grab it for me!</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+
+    <!-- Custom Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" type="text/css">
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="css/animate.min.css" type="text/css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/creative.css" type="text/css">
+
+    <!-- Java Script -->
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+
+
+</head>
+
+<body id="page-top">
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-offset-2 col-md-8">
+        <div class="signup">
+                    <h2 class="signup-title">Sign up for Grabitfor.me</h2>
+                    <p id="signup-success" class="text-success"></p>
+                    <p id="signup-error" class="text-danger"></p>
+
+                    <form class="signup-form" id="signup-form" role="form" onsubmit="return signup(this)">
+                        <div class="form-group">
+                            <label class="control-label">Name</label>
+                            <input class="form-control" name="name" type="name" placeholder="Adam Smith" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Email</label>
+                            <input class="form-control" name="email" type="email" placeholder="grabitforme@illinois.edu" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Phone</label>
+                         <input class="form-control" name="phone" type="phone" placeholder="123-456-8910" required>
+                        </div>
+                        <button class="btn btn-success" id="signup-button" type="submit" >Join now</button>
+                    </form>
+                </div>
+
+                <script>
+                    var signupForm = document.getElementById('signup-form');
+                    var signupSuccess = document.getElementById('signup-success');
+                    var signupError = document.getElementById('signup-error');
+                    var signupBtn = document.getElementById('signup-button');
+                    var onSignupComplete = function(error) {
+                      signupBtn.disabled = false;
+                      if (error) {
+                        signupError.innerHTML = 'Sorry. Could not signup.';
+                      } else {
+                        signupSuccess.innerHTML = 'Thanks for signing up!';
+                        // hide the form
+                        signupForm.style.display = 'none';
+                      }
+                    };
+                    function signup(formObj) {
+                        // Store emails to firebase
+                        var myFirebaseRef = new Firebase("https://bff59xqwew9.firebaseio-demo.com/");
+                        myFirebaseRef.push({
+                          name: formObj.name.value,
+                                                    email: formObj.email.value,
+                          phone: formObj.phone.value,
+
+                        }, onSignupComplete);
+                        signupBtn.disabled = true;
+                        return false;
+                    }
+                </script>
+         </div>
+         </div>
+    </div>
+  </div>
+</div>
+</body>
